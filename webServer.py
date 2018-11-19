@@ -1,7 +1,7 @@
 #Step 1 of Final Exam.  Note: Web server is running on localhost:8555 right now.
 
 from socket import *
-serverPort = 8555
+serverPort = 80
 serverSocket = socket(AF_INET, SOCK_STREAM)
 serverSocket.bind(('', serverPort))
 serverSocket.listen(1)
@@ -13,3 +13,5 @@ while(1):
 
 connectionSocket.close()
 
+# udp on port 53
+# DNS
