@@ -1,38 +1,25 @@
 import socket
-import sys
-from rtlsdr import *
+import numpy as np
+import sounddevice as sd
+from scipy.io.wavfile import write
 
-serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-host = '127.0.0.1'
-port = 4000
-serversocket.bind((host, port))
+#from rtlsdr import *
 
-# client class
-class client():
-    def __init__(self, socket, address):
-        self.sock = socket
-        self.addr = address
-        self.start()
 
-    def run(self):
-        while 1:
-            print('Client sent:', self.sock.recvfrom(1024).decode())
-            self.sock.send('who dis')
+TCP_IP = '172.25.79.75' # Saad's IP
+TCP_PORT = 4000
+BUFFER_SIZE = 1024
+MESSAGE = ("this is the pepsi and saad is very sexy")
+bin_data = bin(int.from_bytes(MESSAGE.encode(), 'big'))
+msg = np.array(list(bin_data[2:]), dtype = 'uint8')
+print (msg)
+sd.play(msg, 44100)
+#broadcast message on FM88.7
 
-# server listening to FM87.7 on port 4000
-serversocket.listen(4)
-print ('Server started and listening')
-while 1:
-    print('test')
-    try:
-        print('test')
-        (clientsocket, address) = serversocket.accept()
-        client = RtlSdrTcpClient(hostname='127.0.0.1', port=4000)
-        client.center_freq = 87.7e6
-        data = client.read_samples()
-        print ("Connection Made")
-        print(data)
-        serversocket.close()
-    except KeyboardInterrupt:
-        print ('', 'Interrupted')
-        sys.exit(0)
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.connect((TCP_IP, TCP_PORT))
+s.sendall(msg)
+msg = s.recv(BUFFER_SIZE)
+s.close()
+
+print ("sent data:", msg)

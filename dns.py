@@ -22,7 +22,7 @@ def getAnswer():
 	answer += b'\x00\x01' # CLASS IN
 	answer += b'\x00\x00\x00\x1b' # TTL
 	answer += b'\x00\x04' # RDLENGTH
-	answer += b'\x05\x07\x06\x06' #RDATA
+	answer += b'\xac\x19\x4f\x5c' #RDATA
 	return answer
 
 def GetFinalPacket(data):
@@ -39,4 +39,5 @@ while 1:
 
 #b'\x00\x01*\x01\x01*\x00\x01Hend\x00\x00\x00\x00Qend\xc0\x0c\x03156\x03174\x0225\x03172\x07in-addr\x04arpa\x00\x00\x0c\x00\x01'
 #      0000 0001									
-# 172.25.174.156
+# 172.25.79.92 - AC.19.4F.5C
+# http://172.25.79.92/
