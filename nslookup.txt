@@ -1,0 +1,1 @@
+cd C:\Users\Mert Karakas\Desktop\5th Semester\ECE 4457 - Computer Networks\CS4457Project & python dns.py
