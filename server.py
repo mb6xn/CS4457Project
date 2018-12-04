@@ -1,13 +1,13 @@
 import socket, time
 import numpy as np
 import pylab as plt
-from rtlsdr import RtlSdr
+#from rtlsdr import RtlSdr
 import scipy.signal as signal
 import sounddevice as sd
 
 TCP_IP = '127.0.0.1'
 TCP_PORT = 4000
-BUFFER_SIZE = 4096
+BUFFER_SIZE = 8192
 time.sleep(1)
 def gen_tone(amplitude, tone_duration, frequency):
     x = np.arange(44100)
