@@ -1,4 +1,4 @@
-import socket
+import socket, time
 import numpy as np
 import pylab as plt
 from rtlsdr import RtlSdr
@@ -8,7 +8,7 @@ import sounddevice as sd
 TCP_IP = '127.0.0.1'
 TCP_PORT = 4000
 BUFFER_SIZE = 4096
-
+time.sleep(1)
 def gen_tone(amplitude, tone_duration, frequency):
     x = np.arange(44100)
     tone = amplitude * np.sin(2 * np.pi * frequency/44100 * x)
@@ -23,9 +23,10 @@ s.listen(5)
 
 conn, addr = s.accept()
 print ('Connection by', addr)
-
+# time.sleep(2) # sleep 2 seconds
 while 1:
     msg = conn.recv(BUFFER_SIZE)
+    conn.sendall(msg)  # echo
     for i in list(msg):
         if i == 1:
             sd.play(tone1, blocking = True)
@@ -33,6 +34,5 @@ while 1:
             sd.play(tone2, blocking = True)
     if not msg: break
     print ("Received Data:", msg)
-    conn.sendall(msg)  # echo
 
 conn.close()
