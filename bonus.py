@@ -4,7 +4,7 @@ import scipy.signal as signal
 from scipy.signal import butter, lfilter
 import matplotlib
 # matplotlib.use('Agg')
-import time
+import time, csv
 import matplotlib.pyplot as plt
 from pylab import *
 import sounddevice as sd
@@ -107,8 +107,23 @@ x7 = signal.decimate(x6, dec_audio)
 
 # Scale audio to adjust volume
 x7 *= 10000 / np.max(np.abs(x7))
-print(list(x7))
-print(min(x7), max(x7))
+print(x7)
 # Save to file as 16-bit signed single-channel audio samples
 x7.astype("int16").tofile("wbfm-mono.raw")
-print(Fs_audio)
+data = [[float(elem) for elem in x7]]
+myFile = open('csvAudio.csv', "w")
+with myFile:
+    writer = csv.writer(myFile)
+    writer.writerows(data)
+
+
+
+
+
+
+
+# diffList = []
+# for i in range(1, len(x7) - 1):
+#     diffList[i] = np.absolute(x7[i] - x7[i-1])
+# plt.hist(diffList)
+# plt.savefig("diff_hist.pdf", bbox_inches='tight', pad_inches=0.5)
